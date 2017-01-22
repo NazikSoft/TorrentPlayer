@@ -1,0 +1,7 @@
+# Created by .ignore support plugin (hsz.mobi)
+.gitignore
+.gradle/
+.idea/encodings.xml
+.idea/workspace.xml
+build/
+local.properties

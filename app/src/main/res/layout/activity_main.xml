@@ -10,20 +10,38 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.naziksost.torrentplayer.MainActivity">
 
-    <ToggleButton
-        android:text="ToggleButton"
-        android:layout_width="match_parent"
+    <Button
+        android:text="Select File"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/bController" />
+        android:id="@+id/bSelectFile" />
 
-    <VideoView
+    <TextView
+        android:text="File path ..."
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/videoView"
-        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bSelectFile"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="55dp"
+        android:id="@+id/textView" />
+
+    <Button
+        android:text="Play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="68dp"
+        android:id="@+id/bPlay" />
+
+    <TextView
+        android:text="Torrent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView2"
+        android:layout_below="@+id/textView"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/bController" />
+        android:layout_alignParentStart="true" />
 </RelativeLayout>

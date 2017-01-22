@@ -3,29 +3,25 @@ package com.naziksost.torrentplayer;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
 import java.io.File;
 
-/**
- * Created by Kate on 14.01.2017.
- */
-
-public class FileManager extends AppCompatActivity{
-
+public class FileChooser extends AppCompatActivity {
     private String filePath;
-    private File file;
 
     @Override
-    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_file_chooser);
 
         showFileChooser();
     }
+
 
     private void showFileChooser() {
         Log.d(Const.TAG, "showFileChooser");
@@ -36,7 +32,7 @@ public class FileManager extends AppCompatActivity{
 
         try {
             startActivityForResult(
-                    Intent.createChooser(intent, "Select a Image"), Const.REQUEST_FILE_SELECT);
+                    Intent.createChooser(intent, "Select a Video"), Const.REQUEST_FILE_SELECT);
         } catch (android.content.ActivityNotFoundException ex) {
             // if not install any file manager
             Toast.makeText(this, "Please install a File Manager.",
@@ -56,16 +52,40 @@ public class FileManager extends AppCompatActivity{
                     filePath = getPath(uri);
 
                     if (isValidFile()) {
-                        file = new File(filePath);
                         Intent intent = new Intent();
-                        intent.putExtra(Const.EXTRA_FILE, file);
+                        intent.putExtra(Const.EXTRA_FILE_PATH, filePath);
                         setResult(RESULT_OK, intent);
                         finish();
+                    }
+                    else {
+                        Toast.makeText(this,"Wrong file's type. Please select another file",Toast.LENGTH_LONG).show();
+                        showFileChooser();
                     }
                 }
                 break;
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private String getPath(Uri uri) {
+        if ("content".equalsIgnoreCase(uri.getScheme())) {
+            String[] projection = {"_data"};
+            Cursor cursor = null;
+
+            try {
+                cursor = this.getContentResolver().query(uri, projection, null, null, null);
+                int column_index = cursor.getColumnIndexOrThrow("_data");
+                if (cursor.moveToFirst()) {
+                    return cursor.getString(column_index);
+                }
+            } catch (Exception e) {
+
+            }
+        } else if ("file".equalsIgnoreCase(uri.getScheme())) {
+            return uri.getPath();
+        }
+
+        return null;
     }
 
     private boolean isValidFile() {
@@ -93,25 +113,5 @@ public class FileManager extends AppCompatActivity{
         }
     }
 
-    private String getPath(Uri uri) {
-        if ("content".equalsIgnoreCase(uri.getScheme())) {
-            String[] projection = {"_data"};
-            Cursor cursor = null;
-
-            try {
-                cursor = this.getContentResolver().query(uri, projection, null, null, null);
-                int column_index = cursor.getColumnIndexOrThrow("_data");
-                if (cursor.moveToFirst()) {
-                    return cursor.getString(column_index);
-                }
-            } catch (Exception e) {
-
-            }
-        } else if ("file".equalsIgnoreCase(uri.getScheme())) {
-            return uri.getPath();
-        }
-
-        return null;
-    }
 
 }

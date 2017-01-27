@@ -1,4 +1,4 @@
-package com.naziksost.torrentplayer;
+package com.naziksost.torrentplayer.activity;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -8,6 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.naziksost.torrentplayer.Const;
+import com.naziksost.torrentplayer.R;
 
 import java.io.File;
 

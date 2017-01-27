@@ -7,35 +7,30 @@ import java.io.File;
 
 public class Video {
 
-    private File parentDir;
-    private File file;
+    private String parentDirPath;
     private String name;
     private String path;
 
     public Video(File file) {
-        this.file = file;
-        parentDir = file.getParentFile();
+        parentDirPath = file.getParentFile().getAbsolutePath();
         name = file.getName();
         path = file.getAbsolutePath();
     }
 
     public Video(String path) {
         this.path = path;
-        file = new File(path);
         name = FilesUtils.nameFromPath(path, true);
-        parentDir = file.getParentFile();
+        parentDirPath = new File(path).getParentFile().getAbsolutePath();
 
     }
 
     public Video(File parentDir, String name) {
-        this.parentDir = parentDir;
+        this.parentDirPath = parentDir.getAbsolutePath();
         this.name = name;
-        file = new File(parentDir, name);
-        path = file.getAbsolutePath();
+        path = new File(parentDir, name).getAbsolutePath();
     }
 
-    public boolean exists(){
-        return file.exists();
+    public boolean exists(){return new File(path).exists();
     }
 
     @Override
@@ -44,20 +39,12 @@ public class Video {
                 "Path= " + path + '\n';
     }
 
-    public File getParentDir() {
-        return parentDir;
+    public String getParentDirPath() {
+        return parentDirPath;
     }
 
-    public void setParentDir(File parentDir) {
-        this.parentDir = parentDir;
-    }
-
-    public File getFile() {
-        return file;
-    }
-
-    public void setFile(File file) {
-        this.file = file;
+    public void setParentDirPath(String parentDirPath) {
+        this.parentDirPath = parentDirPath;
     }
 
     public String getName() {

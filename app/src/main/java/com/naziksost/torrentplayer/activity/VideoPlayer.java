@@ -1,4 +1,4 @@
-package com.naziksost.torrentplayer;
+package com.naziksost.torrentplayer.activity;
 
 import android.annotation.SuppressLint;
 import android.net.Uri;
@@ -10,6 +10,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.MediaController;
 import android.widget.VideoView;
+
+import com.naziksost.torrentplayer.Const;
+import com.naziksost.torrentplayer.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

@@ -44,16 +44,27 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.FilesH
         return files.size();
     }
 
-    public static class FilesHolder extends RecyclerView.ViewHolder {
-        CardView cv;
-        ImageView img;
-        TextView tv;
+    public static class FilesHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        private CardView cv;
+        private ImageView img;
+        private TextView tv;
 
         public FilesHolder(View itemView) {
             super(itemView);
             cv = (CardView) itemView.findViewById(R.id.itemCardView);
             img = (ImageView) itemView.findViewById(R.id.itemImgView);
             tv = (TextView) itemView.findViewById(R.id.itemTextView);
+
+            cv.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+
+        }
+
+        public static interface ViewHoldersClick{
+            public void onCardViewClick(View view);
         }
     }
 }

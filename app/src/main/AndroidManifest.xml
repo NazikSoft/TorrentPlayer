@@ -21,10 +21,10 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".FileChooser" />
+        <activity android:name=".activity.FileChooser" />
 
         <activity
-            android:name=".VideoPlayer"
+            android:name=".activity.VideoPlayer"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_video_player"
             android:theme="@style/FullscreenTheme" />

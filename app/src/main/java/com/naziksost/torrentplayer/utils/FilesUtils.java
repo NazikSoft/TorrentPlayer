@@ -1,14 +1,13 @@
 package com.naziksost.torrentplayer.utils;
 
-import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
 
 import com.naziksost.torrentplayer.Const;
 
 import java.io.File;
-import java.net.URLConnection;
-import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -16,7 +15,6 @@ import java.util.List;
  */
 
 public class FilesUtils {
-
 
 
     public static String nameFromPath(String path, boolean withExtension) {
@@ -33,13 +31,25 @@ public class FilesUtils {
         }
     }
 
+    public static void sortAZ(List<File> list) {
+        Comparator<File> comparator = new Comparator<File>() {
+            @Override
+            public int compare(File o1, File o2) {
+                return o1.getName().compareTo(o2.getName());
+            }
+        };
+        Collections.sort(list, comparator);
+    }
 
-//    public  static File getExternalVideoDir(){
-//        if (!isMountSD()) return null;
-//
-//
-//        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
-//    }
+    public static void sortZA(List<File> list) {
+                Comparator<File> comparator = new Comparator<File>() {
+            @Override
+            public int compare(File o1, File o2) {
+                return o2.getName().compareTo(o1.getName());
+            }
+        };
+        Collections.sort(list, comparator);
+        }
 
     public static boolean isMountSD() {
         if (!Environment.getExternalStorageState().equals(

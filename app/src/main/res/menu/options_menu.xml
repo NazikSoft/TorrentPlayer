@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:title="@string/cloud_sync"
+        android:id="@+id/itemSync"
+        android:icon="@drawable/ic_cloud_queue_black_24dp"
+        android:orderInCategory="3" />
+
+    <item android:id="@+id/itemViewStyle"
+        android:icon="@drawable/ic_view_module_black_24dp"
+        app:showAsAction="always"
+        android:title="@string/view_stile"
+        android:orderInCategory="0" />
+
+    <item android:title="@string/sort"
+        android:id="@+id/itemSort"
+        android:icon="@drawable/ic_sort_black_24dp"
+        app:showAsAction="ifRoom"
+        android:orderInCategory="1" />
+
+    <item android:title="@string/history"
+        android:id="@+id/itemHistory"
+        android:icon="@drawable/ic_history_black_24dp"
+        android:orderInCategory="2" />
+
+</menu>

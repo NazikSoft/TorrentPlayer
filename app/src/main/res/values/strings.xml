@@ -6,6 +6,10 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="controller_not_video_file">It isn\'t video file.</string>
     <string name="controller_file_not_exists">File isn\'t exists</string>
+    <string name="history">History</string>
+    <string name="sort">Sort</string>
+    <string name="view_stile">View stile</string>
+    <string name="cloud_sync">Cloud sync</string>
 
     <string-array name="spinner_list">
         <item>Downloads</item>

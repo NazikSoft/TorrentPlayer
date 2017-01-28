@@ -21,7 +21,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Holder
         this.files = files;
     }
 
-    public void updateList(ArrayList<File> newList){
+    public void updateList(List<File> newList){
         files = newList;
         notifyDataSetChanged();
     }

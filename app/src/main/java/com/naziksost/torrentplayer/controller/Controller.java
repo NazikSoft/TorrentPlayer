@@ -48,9 +48,19 @@ public class Controller {
         }
     }
 
-    public List<File> getDownloadFiles() {
+    public List<File> getDownloadsDirFiles() {
         File download = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
         return Arrays.asList(download.listFiles());
     }
+    public List<File> getVideoDirFiles() {
+        File video = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES);
+        return Arrays.asList(video.listFiles());
+    }
+    public List<File> getUserDirFiles(String filePath) {
+        File userFile = new File(filePath).getParentFile();
+        return Arrays.asList(userFile.listFiles());
+    }
+
+
 
 }

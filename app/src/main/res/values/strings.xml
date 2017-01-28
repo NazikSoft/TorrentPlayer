@@ -6,4 +6,10 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="controller_not_video_file">It isn\'t video file.</string>
     <string name="controller_file_not_exists">File isn\'t exists</string>
+
+    <string-array name="spinner_list">
+        <item>Downloads</item>
+        <item>Video</item>
+        <item>Select video...</item>
+    </string-array>
 </resources>

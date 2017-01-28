@@ -7,12 +7,16 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.ArrayAdapter;
 
+import com.naziksost.torrentplayer.activity.FileChooser;
 import com.naziksost.torrentplayer.controller.Controller;
 import com.naziksost.torrentplayer.entity.OnRecyclerClickListener;
 import com.naziksost.torrentplayer.entity.RecyclerAdapter;
 import com.naziksost.torrentplayer.entity.Video;
 import com.naziksost.torrentplayer.enums.LayoutManagers;
+import com.rey.material.widget.Spinner;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -25,9 +29,11 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
+    @BindView(R.id.spinner)
+    Spinner spinner;
 
     private RecyclerAdapter recyclerAdapter;
-    private List<File> listData = new ArrayList<>();
+    private List<File> listData;
     private Controller c;
     private Video video;
 
@@ -38,9 +44,11 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         c = new Controller(this, recyclerView);
-        listData = c.getDownloadFiles();
+        if (listData == null)
+            listData = c.getDownloadsDirFiles();
 
         initRecyclerView();
+        initSpinner();
     }
 
     private void initRecyclerView() {
@@ -58,7 +66,33 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         recyclerView.setAdapter(recyclerAdapter);
+    }
 
+    private void initSpinner() {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.spinner_list, R.layout.support_simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(Spinner parent, View view, int position, long id) {
+                String[] choose = getResources().getStringArray(R.array.spinner_list);
+                switch (choose[position]) {
+                    case "Downloads":
+                        listData = c.getDownloadsDirFiles();
+                        recyclerAdapter.updateList(listData);
+                        break;
+                    case "Video":
+                        listData = c.getVideoDirFiles();
+                        recyclerAdapter.updateList(listData);
+                        break;
+                    case "Select video...":
+                        startActivityForResult(new Intent(MainActivity.this, FileChooser.class),
+                                Const.REQUEST_GET_FILE_PATH);
+
+                }
+            }
+        });
     }
 
     private void setLayoutManager(LayoutManagers enumLM) {
@@ -86,6 +120,8 @@ public class MainActivity extends AppCompatActivity {
                     if (!c.isVideoFile(filePath)) return;
 
                     video = new Video(filePath);
+                    listData = c.getUserDirFiles(filePath);
+                    recyclerAdapter.updateList(listData);
                     c.runPlayer(video);
                 }
                 break;
@@ -95,7 +131,6 @@ public class MainActivity extends AppCompatActivity {
 
 //        switch (v.getId()) {
 //            case R.id.bSelectFile:
-//                startActivityForResult(new Intent(MainActivity.this, FileChooser.class), Const.REQUEST_GET_FILE_PATH);
 //                break;
 //            case R.id.bPlay:
 //                Intent intent = new Intent(MainActivity.this, VideoPlayer.class);

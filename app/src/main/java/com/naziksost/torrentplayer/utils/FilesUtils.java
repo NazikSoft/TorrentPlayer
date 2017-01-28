@@ -37,7 +37,7 @@ public class FilesUtils {
 //    public  static File getExternalVideoDir(){
 //        if (!isMountSD()) return null;
 //
-//        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES);
+//
 //        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
 //    }
 

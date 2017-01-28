@@ -7,6 +7,7 @@ import android.util.Log;
 import com.naziksost.torrentplayer.Const;
 
 import java.io.File;
+import java.net.URLConnection;
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,6 +16,8 @@ import java.util.List;
  */
 
 public class FilesUtils {
+
+
 
     public static String nameFromPath(String path, boolean withExtension) {
         if (path == null || path.equals("")) return "";
@@ -30,10 +33,6 @@ public class FilesUtils {
         }
     }
 
-    public static List<File> getDownloadFiles() {
-        File download = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-        return Arrays.asList(download.listFiles());
-    }
 
 //    public  static File getExternalVideoDir(){
 //        if (!isMountSD()) return null;

@@ -1,42 +1,51 @@
 package com.naziksost.torrentplayer.entity;
 
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.naziksost.torrentplayer.R;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Nazar on 25.01.2017.
- */
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.FilesHolder> {
+public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Holder> {
 
     private List<File> files = new ArrayList<>();
+    private OnRecyclerClickListener onRecyclerClickListener;
 
     public RecyclerAdapter(List<File> files) {
         this.files = files;
     }
 
-    @Override
-    public FilesHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_item, parent, false);
-        FilesHolder fh = new FilesHolder(v);
-        return fh;
+    public void updateList(ArrayList<File> newList){
+        files = newList;
+        notifyDataSetChanged();
+    }
+
+    public void setOnRecyclerClickListener(OnRecyclerClickListener listener){
+        onRecyclerClickListener = listener;
     }
 
     @Override
-    public void onBindViewHolder(FilesHolder holder, int position) {
+    public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_item, parent, false);
+        return new Holder(v);
+    }
+
+    @Override
+    public void onBindViewHolder(final Holder holder, int position) {
         holder.img.setImageResource(android.R.drawable.ic_menu_slideshow);
         holder.tv.setText(files.get(position).getName());
+        holder.view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onRecyclerClickListener.onClick(holder.getAdapterPosition());
+            }
+        });
     }
 
     @Override
@@ -44,27 +53,19 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.FilesH
         return files.size();
     }
 
-    public static class FilesHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        private CardView cv;
-        private ImageView img;
-        private TextView tv;
 
-        public FilesHolder(View itemView) {
+    public static class Holder extends RecyclerView.ViewHolder {
+         View view;
+         ImageView img;
+         TextView tv;
+
+        public Holder(View itemView) {
             super(itemView);
-            cv = (CardView) itemView.findViewById(R.id.itemCardView);
             img = (ImageView) itemView.findViewById(R.id.itemImgView);
             tv = (TextView) itemView.findViewById(R.id.itemTextView);
-
-            cv.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View view) {
-
-        }
-
-        public static interface ViewHoldersClick{
-            public void onCardViewClick(View view);
+            view = itemView;
         }
     }
+
+
 }

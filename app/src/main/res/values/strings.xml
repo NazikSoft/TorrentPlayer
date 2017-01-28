@@ -4,4 +4,6 @@
     <string name="title_activity_video_player">VideoPlayer</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="controller_not_video_file">It isn\'t video file.</string>
+    <string name="controller_file_not_exists">File isn\'t exists</string>
 </resources>

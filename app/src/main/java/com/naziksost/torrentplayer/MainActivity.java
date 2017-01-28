@@ -1,68 +1,72 @@
 package com.naziksost.torrentplayer;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
+import com.naziksost.torrentplayer.controller.Controller;
+import com.naziksost.torrentplayer.entity.OnRecyclerClickListener;
 import com.naziksost.torrentplayer.entity.RecyclerAdapter;
 import com.naziksost.torrentplayer.entity.Video;
 import com.naziksost.torrentplayer.enums.LayoutManagers;
-import com.naziksost.torrentplayer.utils.FilesUtils;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import jBittorrentAPI.DownloadManager;
-import jBittorrentAPI.TorrentFile;
-import jBittorrentAPI.TorrentProcessor;
-import jBittorrentAPI.Utils;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
+    private RecyclerAdapter recyclerAdapter;
     private List<File> listData = new ArrayList<>();
-    private RecyclerAdapter ra;
-    private Video movie = null;
-    private String filePath = "";
+    private Controller c;
+    private Video video;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         ButterKnife.bind(this);
 
-        listData = FilesUtils.getDownloadFiles();
-        ra = new RecyclerAdapter(listData);
+        c = new Controller(this, recyclerView);
+        listData = c.getDownloadFiles();
+
+        initRecyclerView();
+    }
+
+    private void initRecyclerView() {
+        recyclerAdapter = new RecyclerAdapter(listData);
         setLayoutManager(LayoutManagers.LINEAR);
-        recyclerView.setAdapter(ra);
+
+        recyclerAdapter.setOnRecyclerClickListener(new OnRecyclerClickListener() {
+            @Override
+            public void onClick(int position) {
+                String path = listData.get(position).getPath();
+                if (c.isVideoFile(path)) {
+                    video = new Video(path);
+                    c.runPlayer(video);
+                }
+            }
+        });
+        recyclerView.setAdapter(recyclerAdapter);
 
     }
 
     private void setLayoutManager(LayoutManagers enumLM) {
-        if (enumLM == LayoutManagers.LINEAR){
+        if (enumLM == LayoutManagers.LINEAR) {
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
             recyclerView.setLayoutManager(linearLayoutManager);
         }
-        if (enumLM == LayoutManagers.GRID){
+        if (enumLM == LayoutManagers.GRID) {
             GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
             recyclerView.setLayoutManager(gridLayoutManager);
         }
@@ -77,23 +81,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (resultCode == RESULT_OK) {
                     // Get the Uri of the selected file
                     String filePath = data.getStringExtra(Const.EXTRA_FILE_PATH);
-                    movie = new Video(filePath);
-                    Log.d(Const.TAG, "File Path: " + movie);
+                    Log.d(Const.TAG, "File Path: " + filePath);
 
-                    this.filePath = filePath;
+                    if (!c.isVideoFile(filePath)) return;
 
-                    if (movie.exists())
-                        Toast.makeText(this, "Movie loaded", Toast.LENGTH_LONG).show();
-                    else
-                        Toast.makeText(this, "file not exist", Toast.LENGTH_LONG).show();
+                    video = new Video(filePath);
+                    c.runPlayer(video);
                 }
                 break;
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    @Override
-    public void onClick(View v) {
 //        switch (v.getId()) {
 //            case R.id.bSelectFile:
 //                startActivityForResult(new Intent(MainActivity.this, FileChooser.class), Const.REQUEST_GET_FILE_PATH);
@@ -103,6 +102,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                intent.putExtra(Const.EXTRA_PLAY_PATH, filePath);
 //                startActivity(intent);
 //        }
-    }
 }
 

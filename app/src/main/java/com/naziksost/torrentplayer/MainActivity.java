@@ -2,6 +2,7 @@ package com.naziksost.torrentplayer;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,6 +31,7 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
+    // Butterknife lib
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     @BindView(R.id.spinner)
@@ -50,10 +52,11 @@ public class MainActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
+        // prepare tool bar
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
-        c = new Controller(this, recyclerView);
+        c = new Controller(this);
         if (listData == null)
             listData = c.getDownloadsDirFiles();
 
@@ -86,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void changeViewStyleIcon(MenuItem item){
+    private void changeViewStyleIcon(MenuItem item) {
         if (currentManager == LayoutManagers.LINEAR) {
             currentManager = LayoutManagers.GRID;
             item.setIcon(R.drawable.ic_view_headline_black_24dp);
@@ -97,20 +100,34 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initRecyclerView() {
-        recyclerAdapter = new RecyclerAdapter(listData);
+        recyclerAdapter = new RecyclerAdapter(this, listData);
         setLayoutManager();
 
         recyclerAdapter.setOnRecyclerClickListener(new OnRecyclerClickListener() {
             @Override
             public void onClick(int position) {
-                String path = listData.get(position).getPath();
-                if (c.isVideoFile(path)) {
-                    video = new Video(path);
-                    c.runPlayer(video);
-                }
+                onRecyclerClickLogic(position);
             }
+
         });
         recyclerView.setAdapter(recyclerAdapter);
+    }
+
+
+    private void onRecyclerClickLogic(int position) {
+        String path = listData.get(position).getPath();
+        // check is file real
+        if (!FilesUtils.isExists(path))
+            Snackbar.make(recyclerView, R.string.controller_file_not_exists, Snackbar.LENGTH_SHORT).show();
+
+        // check is file video
+        if (c.isVideoFile(path)) {
+            video = new Video(path);
+            c.runPlayer(video);
+        } else
+            Snackbar.make(recyclerView, R.string.controller_not_video_file, Snackbar.LENGTH_LONG).show();
+
+
     }
 
     private void initSpinner() {

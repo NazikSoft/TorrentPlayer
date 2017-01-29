@@ -1,5 +1,6 @@
 package com.naziksost.torrentplayer.controller;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Environment;
@@ -7,7 +8,6 @@ import android.support.design.widget.Snackbar;
 import android.view.View;
 
 import com.naziksost.torrentplayer.Const;
-import com.naziksost.torrentplayer.R;
 import com.naziksost.torrentplayer.activity.VideoPlayer;
 import com.naziksost.torrentplayer.entity.Video;
 
@@ -19,11 +19,9 @@ import java.util.List;
 
 public class Controller {
     private Context context;
-    private View view;
 
-    public Controller(Context context, View forSnackbar) {
+    public Controller(Context context) {
         this.context = context;
-        view = forSnackbar;
     }
 
     public void runPlayer(Video video) {
@@ -33,34 +31,25 @@ public class Controller {
     }
 
     public boolean isVideoFile(String path) {
-        // check is file real
-        if (!new File(path).exists()) {
-            Snackbar.make(view, R.string.controller_file_not_exists, Snackbar.LENGTH_SHORT).show();
-            return false;
-        }
-
         // check is file video
         String mimeType = URLConnection.guessContentTypeFromName(path);
-        if (mimeType != null && mimeType.startsWith("video")) return true;
-        else {
-            Snackbar.make(view, R.string.controller_not_video_file, Snackbar.LENGTH_LONG).show();
-            return false;
-        }
+        return mimeType != null && mimeType.startsWith("video");
     }
 
     public List<File> getDownloadsDirFiles() {
         File download = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
         return Arrays.asList(download.listFiles());
     }
+
     public List<File> getVideoDirFiles() {
         File video = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES);
         return Arrays.asList(video.listFiles());
     }
+
     public List<File> getUserDirFiles(String filePath) {
         File userFile = new File(filePath).getParentFile();
         return Arrays.asList(userFile.listFiles());
     }
-
 
 
 }

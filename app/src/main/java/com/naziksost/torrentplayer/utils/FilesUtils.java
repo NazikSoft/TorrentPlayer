@@ -10,11 +10,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-/**
- * Created by Nazar on 25.01.2017.
- */
-
 public class FilesUtils {
+
+    public static boolean isExists(String path) {
+        return new File(path).exists();
+    }
 
 
     public static String nameFromPath(String path, boolean withExtension) {
@@ -31,6 +31,7 @@ public class FilesUtils {
         }
     }
 
+
     public static void sortAZ(List<File> list) {
         Comparator<File> comparator = new Comparator<File>() {
             @Override
@@ -41,15 +42,17 @@ public class FilesUtils {
         Collections.sort(list, comparator);
     }
 
+
     public static void sortZA(List<File> list) {
-                Comparator<File> comparator = new Comparator<File>() {
+        Comparator<File> comparator = new Comparator<File>() {
             @Override
             public int compare(File o1, File o2) {
                 return o2.getName().compareTo(o1.getName());
             }
         };
         Collections.sort(list, comparator);
-        }
+    }
+
 
     public static boolean isMountSD() {
         if (!Environment.getExternalStorageState().equals(

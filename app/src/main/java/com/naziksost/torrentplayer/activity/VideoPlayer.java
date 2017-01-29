@@ -1,14 +1,15 @@
 package com.naziksost.torrentplayer.activity;
 
-import android.annotation.SuppressLint;
-import android.net.Uri;
+import android.content.pm.ActivityInfo;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.MediaController;
+import android.widget.RelativeLayout;
 import android.widget.VideoView;
 
 import com.naziksost.torrentplayer.Const;
@@ -19,138 +20,97 @@ import butterknife.ButterKnife;
 
 public class VideoPlayer extends AppCompatActivity {
 
-    private final Handler mHideHandler = new Handler();
+    // Butterknife lib
     @BindView(R.id.videoView)
-     VideoView videoView;
-    @BindView(R.id.fullscreen_content_controls)
-    View mControlsView;
+    VideoView videoView;
+    @BindView(R.id.bFullscreen)
+    Button bFullscreen;
+    @BindView(R.id.videoViewLayout)
+    RelativeLayout relativeLayout;
 
+    private boolean isFullScreen = true;
     private String playPath = "";
-
-    private final Runnable mHidePart2Runnable = new Runnable() {
-        @SuppressLint("InlinedApi")
-        @Override
-        public void run() {
-            // Delayed removal of status and navigation bar
-            videoView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
-                    | View.SYSTEM_UI_FLAG_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-        }
-    };
-    private final Runnable mShowPart2Runnable = new Runnable() {
-        @Override
-        public void run() {
-            // Delayed display of UI elements
-            ActionBar actionBar = getSupportActionBar();
-            if (actionBar != null) {
-                actionBar.show();
-            }
-            mControlsView.setVisibility(View.VISIBLE);
-        }
-    };
-    private boolean mVisible;
-    private final Runnable mHideRunnable = new Runnable() {
-        @Override
-        public void run() {
-            hide();
-        }
-    };
-    private final View.OnTouchListener mDelayHideTouchListener = new View.OnTouchListener() {
-        @Override
-        public boolean onTouch(View view, MotionEvent motionEvent) {
-            if (Const.AUTO_HIDE) {
-                delayedHide(Const.AUTO_HIDE_DELAY_MILLIS);
-            }
-            return false;
-        }
-    };
+    private RelativeLayout.LayoutParams layoutParams;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_video_player);
 
+        layoutParams = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.MATCH_PARENT,
+                RelativeLayout.LayoutParams.MATCH_PARENT);
+
         ButterKnife.bind(this);
+        enterFullScreen();
 
-        mVisible = true;
         playPath = getIntent().getStringExtra(Const.EXTRA_PLAY_PATH);
+        initVideoView();
 
-        // Set up the user interaction to manually show or hide the system UI.
-        videoView.setOnClickListener(new View.OnClickListener() {
+        bFullscreen.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                toggle();
+            public void onClick(View v) {
+                enterFullScreen();
             }
         });
+    }
 
-        // Upon interacting with UI controls, delay any scheduled hide()
-        // operations to prevent the jarring behavior of controls going away
-        // while interacting with the UI.
-        findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
+    private void initVideoView() {
         videoView.setMediaController(new MediaController(this));
-        if (playPath.equals(""))
-            videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.test));
-        else videoView.setVideoPath(playPath);
+        videoView.setVideoPath(playPath);
         videoView.requestFocus();
         videoView.start();
-
-
     }
 
+    private void enterFullScreen() {
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        bFullscreen.setVisibility(View.INVISIBLE);
+        isFullScreen = true;
+
+        videoView.setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+        videoView.setLayoutParams(layoutParams);
+    }
+
+    private void exitFullScreen() {
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        videoView.setSystemUiVisibility(0);
+        isFullScreen = false;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            layoutParams.removeRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+            layoutParams.removeRule(RelativeLayout.ALIGN_PARENT_TOP);
+            layoutParams.removeRule(RelativeLayout.ALIGN_PARENT_LEFT);
+            layoutParams.removeRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+        } else {
+            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, 0);
+            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0);
+            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT, 0);
+            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, 0);
+        }
+        bFullscreen.setVisibility(View.VISIBLE);
+
+        videoView.setLayoutParams(layoutParams);
+    }
 
     @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-
-        // Trigger the initial hide() shortly after the activity has been
-        // created, to briefly hint to the user that UI controls
-        // are available.
-        delayedHide(100);
-    }
-
-    private void toggle() {
-        if (mVisible) {
-            hide();
-        } else {
-            show();
-        }
-    }
-
-    private void hide() {
-        // Hide UI first
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.hide();
-        }
-        mControlsView.setVisibility(View.GONE);
-        mVisible = false;
-
-        // Schedule a runnable to remove the status and navigation bar after a delay
-        mHideHandler.removeCallbacks(mShowPart2Runnable);
-        mHideHandler.postDelayed(mHidePart2Runnable, Const.UI_ANIMATION_DELAY);
-    }
-
-    @SuppressLint("InlinedApi")
-    private void show() {
-        // Show the system bar
-        videoView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
-        mVisible = true;
-
-        // Schedule a runnable to display UI elements after a delay
-        mHideHandler.removeCallbacks(mHidePart2Runnable);
-        mHideHandler.postDelayed(mShowPart2Runnable, Const.UI_ANIMATION_DELAY);
-    }
-
-    /**
-     * Schedules a call to hide() in [delay] milliseconds, canceling any
-     * previously scheduled calls.
-     */
-    private void delayedHide(int delayMillis) {
-        mHideHandler.removeCallbacks(mHideRunnable);
-        mHideHandler.postDelayed(mHideRunnable, delayMillis);
+    public void onBackPressed() {
+        if (isFullScreen)
+            exitFullScreen();
+        else
+            super.onBackPressed();
     }
 }

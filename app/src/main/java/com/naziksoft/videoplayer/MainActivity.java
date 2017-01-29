@@ -1,4 +1,4 @@
-package com.naziksost.torrentplayer;
+package com.naziksoft.videoplayer;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,14 +13,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
-import com.naziksost.torrentplayer.activity.FileChooser;
-import com.naziksost.torrentplayer.controller.Controller;
-import com.naziksost.torrentplayer.entity.OnRecyclerClickListener;
-import com.naziksost.torrentplayer.entity.RecyclerAdapter;
-import com.naziksost.torrentplayer.entity.Video;
-import com.naziksost.torrentplayer.enums.LayoutManagers;
-import com.naziksost.torrentplayer.utils.FilesUtils;
+import com.naziksoft.videoplayer.activity.AuthActivity;
+import com.naziksoft.videoplayer.activity.FileChooser;
+import com.naziksoft.videoplayer.controller.Controller;
+import com.naziksoft.videoplayer.entity.OnRecyclerClickListener;
+import com.naziksoft.videoplayer.entity.RecyclerAdapter;
+import com.naziksoft.videoplayer.entity.Video;
+import com.naziksoft.videoplayer.enums.LayoutManagers;
+import com.naziksoft.videoplayer.utils.FilesUtils;
 import com.rey.material.widget.Spinner;
 
 import java.io.File;
@@ -85,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.itemHistory:
                 break;
             case R.id.itemSync:
+                startActivityForResult(new Intent(this, AuthActivity.class),Const.REQUEST_GET_USER_EMAIL);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -194,6 +197,16 @@ public class MainActivity extends AppCompatActivity {
                     c.runPlayer(video);
                 }
                 break;
+
+            // start auth and get user email
+            case Const.REQUEST_GET_USER_EMAIL:
+                if (resultCode == RESULT_OK){
+                    String email = data.getStringExtra(Const.EXTRA_USER_EMAIL);
+                    if (email != "")
+                        Toast.makeText(MainActivity.this, email, Toast.LENGTH_LONG).show();
+                }
+                break;
+
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

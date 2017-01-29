@@ -1,4 +1,4 @@
-package com.naziksost.torrentplayer.activity;
+package com.naziksoft.videoplayer.activity;
 
 import android.content.pm.ActivityInfo;
 import android.os.Build;
@@ -11,8 +11,8 @@ import android.widget.MediaController;
 import android.widget.RelativeLayout;
 import android.widget.VideoView;
 
-import com.naziksost.torrentplayer.Const;
-import com.naziksost.torrentplayer.R;
+import com.naziksoft.videoplayer.Const;
+import com.naziksoft.videoplayer.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

@@ -1,12 +1,12 @@
-package com.naziksost.torrentplayer.controller;
+package com.naziksoft.videoplayer.controller;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Environment;
 
-import com.naziksost.torrentplayer.Const;
-import com.naziksost.torrentplayer.activity.VideoPlayer;
-import com.naziksost.torrentplayer.entity.Video;
+import com.naziksoft.videoplayer.Const;
+import com.naziksoft.videoplayer.activity.VideoPlayer;
+import com.naziksoft.videoplayer.entity.Video;
 
 import java.io.File;
 import java.net.URLConnection;

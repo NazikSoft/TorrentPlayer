@@ -1,19 +1,16 @@
-package com.naziksost.torrentplayer.activity;
+package com.naziksoft.videoplayer.activity;
 
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.naziksost.torrentplayer.Const;
-import com.naziksost.torrentplayer.R;
-import com.naziksost.torrentplayer.controller.Controller;
-
-import java.io.File;
+import com.naziksoft.videoplayer.Const;
+import com.naziksoft.videoplayer.R;
+import com.naziksoft.videoplayer.controller.Controller;
 
 public class FileChooser extends AppCompatActivity {
     private String filePath;

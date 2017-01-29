@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TorrentPlayer</string>
+    <string name="app_name">Video Player</string>
 
     <string name="title_activity_video_player">VideoPlayer</string>
     <string name="dummy_button">Dummy Button</string>
@@ -11,6 +11,22 @@
     <string name="view_stile">View stile</string>
     <string name="cloud_sync">Cloud sync</string>
     <string name="button_fullscreen">fullscreen</string>
+
+    <!-- Strings related to login -->
+    <string name="error_auth">Auth failed</string>
+    <string name="progress_dialog_title">Authorization</string>
+    <string name="progress_dialog_massage">Connecting…</string>
+    <string name="sign_in">Sign In</string>
+    <string name="menu_logout">Log Out</string>
+    <string name="play_services_error">Google Play Services error.</string>
+    <string name="user_with_email_exist">Auth fail</string>
+    <string name="button_sign_in">Sign In</string>
+    <string name="button_register">Register</string>
+    <string name="edittext_email">Your email</string>
+    <string name="edittext_password">Your password</string>
+    <string name="toolbar_sign_in">Sign In</string>
+    <string name="textview_authorization">Authorization</string>
+    <string name="textview_or">or</string>
 
     <string-array name="spinner_list">
         <item>Downloads</item>

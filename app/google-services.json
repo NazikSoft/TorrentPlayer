@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "627819166695",
+    "firebase_url": "https://videoplayer-b82c4.firebaseio.com",
+    "project_id": "videoplayer-b82c4",
+    "storage_bucket": "videoplayer-b82c4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:627819166695:android:db65322b9fb8667b",
+        "android_client_info": {
+          "package_name": "com.naziksoft.videoplayer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "627819166695-fq4duvch0rm4poc5fvkb27i5blerctef.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD28imsJdMO5vPvwuFSBF11FaaXZWtnq-Q"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

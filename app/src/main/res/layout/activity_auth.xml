@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="top">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_auth_activity"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        android:title="@string/toolbar_sign_in"/>
+
+    <com.rey.material.widget.EditText
+        android:textSize="18sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:id="@+id/editTextEmail"
+        android:hint="@string/edittext_email"
+        android:layout_marginTop="80dp"
+        app:et_labelEnable="true"
+        app:et_supportMode="helperWithError"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        app:et_error="Invalid email"
+        app:et_supportTextErrorColor="@color/colorAccent"
+        app:et_supportTextColor="@color/colorPrimaryDark"
+        app:et_dividerColor="@color/colorPrimary"
+        app:et_dividerErrorColor="@color/colorAccent"
+        android:layout_below="@+id/toolbar_auth_activity"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        app:et_autoCompleteMode="single"
+        android:layout_marginBottom="15dp"
+        app:et_dividerHeight="2dp"
+        app:et_helper="Enter email" />
+
+    <com.rey.material.widget.EditText
+        android:textSize="18sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:id="@+id/editTextPassword"
+        android:hint="@string/edittext_password"
+        app:et_supportMode="helperWithError"
+        android:layout_below="@+id/editTextEmail"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        app:et_helper="Enter min 4 chars"
+        app:et_error="Invalid password"
+        app:et_supportTextErrorColor="@color/colorAccent"
+        app:et_supportTextColor="@color/colorPrimaryDark"
+        app:et_dividerColor="@color/colorPrimary"
+        app:et_dividerErrorColor="@color/colorAccent"
+        android:layout_marginBottom="20dp"
+        app:et_dividerHeight="2dp">
+
+    </com.rey.material.widget.EditText>
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/bSignInGoogle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:layout_gravity="center"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/textView3"
+        android:layout_alignEnd="@+id/textView3"
+        android:layout_marginBottom="60dp" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout2"
+        android:paddingLeft="60dp"
+        android:paddingRight="60dp"
+        android:layout_below="@+id/editTextPassword"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <com.rey.material.widget.Button
+            style="@style/Material.Drawable.Ripple.Wave.Light"
+            app:rd_enable="true"
+            android:text="@string/button_sign_in"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonSignIn"
+            android:layout_weight="1" />
+
+        <TextView
+            android:text="@string/textview_or"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView2"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textAllCaps="false" />
+
+        <com.rey.material.widget.Button
+            style="@style/Material.Drawable.Ripple.Wave.Light"
+            app:rd_enable="true"
+            android:text="@string/button_register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonRegister"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <TextView
+        android:text="@string/textview_authorization"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView3"
+        android:typeface="sans"
+        android:textStyle="normal|bold"
+        android:textSize="18sp"
+        android:textColor="@color/colorTextPrimary"
+        android:layout_below="@+id/toolbar_auth_activity"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="53dp" />
+
+</RelativeLayout>

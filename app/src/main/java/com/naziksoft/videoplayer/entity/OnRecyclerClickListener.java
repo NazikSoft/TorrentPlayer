@@ -1,4 +1,4 @@
-package com.naziksost.torrentplayer.entity;
+package com.naziksoft.videoplayer.entity;
 
 
 public interface OnRecyclerClickListener {

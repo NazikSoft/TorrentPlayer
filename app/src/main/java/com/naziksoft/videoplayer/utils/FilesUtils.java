@@ -1,9 +1,9 @@
-package com.naziksost.torrentplayer.utils;
+package com.naziksoft.videoplayer.utils;
 
 import android.os.Environment;
 import android.util.Log;
 
-import com.naziksost.torrentplayer.Const;
+import com.naziksoft.videoplayer.Const;
 
 import java.io.File;
 import java.util.Collections;

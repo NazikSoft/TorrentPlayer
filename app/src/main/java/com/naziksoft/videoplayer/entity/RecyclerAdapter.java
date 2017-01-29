@@ -1,4 +1,4 @@
-package com.naziksost.torrentplayer.entity;
+package com.naziksoft.videoplayer.entity;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.naziksost.torrentplayer.R;
-import com.naziksost.torrentplayer.controller.Controller;
+import com.naziksoft.videoplayer.R;
+import com.naziksoft.videoplayer.controller.Controller;
 
 import java.io.File;
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
-package com.naziksost.torrentplayer.entity;
+package com.naziksoft.videoplayer.entity;
 
-import com.naziksost.torrentplayer.utils.FilesUtils;
+import com.naziksoft.videoplayer.utils.FilesUtils;
 
 import java.io.File;
 

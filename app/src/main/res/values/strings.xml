@@ -27,6 +27,10 @@
     <string name="toolbar_sign_in">Sign In</string>
     <string name="textview_authorization">Authorization</string>
     <string name="textview_or">or</string>
+    <string name="pass_helper">Enter min 4 chars</string>
+    <string name="pass_err">Invalid password</string>
+    <string name="mail_helper">Enter email</string>
+    <string name="mail_err">Invalid email</string>
 
     <string-array name="spinner_list">
         <item>Downloads</item>

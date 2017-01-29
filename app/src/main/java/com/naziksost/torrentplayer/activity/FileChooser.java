@@ -11,17 +11,20 @@ import android.widget.Toast;
 
 import com.naziksost.torrentplayer.Const;
 import com.naziksost.torrentplayer.R;
+import com.naziksost.torrentplayer.controller.Controller;
 
 import java.io.File;
 
 public class FileChooser extends AppCompatActivity {
     private String filePath;
+    private Controller c;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_file_chooser);
 
+        c= new Controller(this);
         showFileChooser();
     }
 
@@ -54,7 +57,7 @@ public class FileChooser extends AppCompatActivity {
                     // Get the path
                     filePath = getPath(uri);
 
-                    if (isValidFile()) {
+                    if (c.isVideoFile(filePath)) {
                         Intent intent = new Intent();
                         intent.putExtra(Const.EXTRA_FILE_PATH, filePath);
                         setResult(RESULT_OK, intent);
@@ -65,6 +68,8 @@ public class FileChooser extends AppCompatActivity {
                         showFileChooser();
                     }
                 }
+                if (resultCode == RESULT_CANCELED)
+                   finish();
                 break;
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -90,31 +95,5 @@ public class FileChooser extends AppCompatActivity {
 
         return null;
     }
-
-    private boolean isValidFile() {
-
-        if (filePath == null || filePath.equals("")) return false;
-        int startSuffix = filePath.lastIndexOf(".");
-        int endSuffix = filePath.length();
-        String suffix = filePath.substring(startSuffix, endSuffix);
-
-        switch (suffix) {
-            case ".avi":
-                return true;
-            case ".mp4":
-                return true;
-            case ".mkv":
-                return true;
-            case ".3gp":
-                return true;
-            case ".webm":
-                return true;
-            case ".ts":
-                return true;
-            default:
-                return false;
-        }
-    }
-
 
 }

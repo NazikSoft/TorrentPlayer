@@ -1,11 +1,8 @@
 package com.naziksost.torrentplayer.controller;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Environment;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 
 import com.naziksost.torrentplayer.Const;
 import com.naziksost.torrentplayer.activity.VideoPlayer;

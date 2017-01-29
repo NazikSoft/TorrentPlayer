@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.itemViewStyle:
                 changeViewStyleIcon(item);
                 setLayoutManager();
+                setRecyclerAdapter();
                 break;
             case R.id.itemHistory:
                 break;
@@ -100,19 +101,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initRecyclerView() {
-        recyclerAdapter = new RecyclerAdapter(this, listData);
         setLayoutManager();
-
-        recyclerAdapter.setOnRecyclerClickListener(new OnRecyclerClickListener() {
-            @Override
-            public void onClick(int position) {
-                onRecyclerClickLogic(position);
-            }
-
-        });
-        recyclerView.setAdapter(recyclerAdapter);
+        setRecyclerAdapter();
     }
-
 
     private void onRecyclerClickLogic(int position) {
         String path = listData.get(position).getPath();
@@ -156,6 +147,21 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void setRecyclerAdapter(){
+        if (currentManager == LayoutManagers.GRID)
+            recyclerAdapter = new RecyclerAdapter(this,R.layout.layout_item_grid, listData);
+        else
+            recyclerAdapter = new RecyclerAdapter(this,R.layout.layout_item_line, listData);
+
+        recyclerAdapter.setOnRecyclerClickListener(new OnRecyclerClickListener() {
+            @Override
+            public void onClick(int position) {
+                onRecyclerClickLogic(position);
+            }
+        });
+        recyclerView.setAdapter(recyclerAdapter);
+    }
+
     private void setLayoutManager() {
         if (currentManager == LayoutManagers.LINEAR) {
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -172,6 +178,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
+
+            // get video path from user
             case Const.REQUEST_GET_FILE_PATH:
                 if (resultCode == RESULT_OK) {
                     // Get the Uri of the selected file

@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.MediaController;
 import android.widget.RelativeLayout;
 import android.widget.VideoView;
@@ -24,7 +23,7 @@ public class VideoPlayer extends AppCompatActivity {
     @BindView(R.id.videoView)
     VideoView videoView;
     @BindView(R.id.bFullscreen)
-    Button bFullscreen;
+    com.rey.material.widget.Button bFullscreen;
     @BindView(R.id.videoViewLayout)
     RelativeLayout relativeLayout;
 
@@ -70,7 +69,7 @@ public class VideoPlayer extends AppCompatActivity {
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         bFullscreen.setVisibility(View.INVISIBLE);
         isFullScreen = true;
-
+        relativeLayout.setBackgroundResource(android.R.color.black);
         videoView.setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                         | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
@@ -89,6 +88,7 @@ public class VideoPlayer extends AppCompatActivity {
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         videoView.setSystemUiVisibility(0);
         isFullScreen = false;
+        relativeLayout.setBackgroundResource(R.color.colorTextLight);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             layoutParams.removeRule(RelativeLayout.ALIGN_PARENT_BOTTOM);

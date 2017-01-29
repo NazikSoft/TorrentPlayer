@@ -10,6 +10,7 @@
     <string name="sort">Sort</string>
     <string name="view_stile">View stile</string>
     <string name="cloud_sync">Cloud sync</string>
+    <string name="button_fullscreen">fullscreen</string>
 
     <string-array name="spinner_list">
         <item>Downloads</item>

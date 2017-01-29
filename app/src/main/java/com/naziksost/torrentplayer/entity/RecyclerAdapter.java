@@ -1,6 +1,5 @@
 package com.naziksost.torrentplayer.entity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,10 +20,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Holder
     private List<File> files = new ArrayList<>();
     private OnRecyclerClickListener onRecyclerClickListener;
     private Controller controller;
+    private int itemLayout;
 
-    public RecyclerAdapter(Activity activity, List<File> files) {
+    public RecyclerAdapter(Context context,int resLayout, List<File> files) {
         this.files = files;
-        controller = new Controller(activity);
+        controller = new Controller(context);
+        itemLayout = resLayout;
     }
 
     public void updateList(List<File> newList) {
@@ -38,7 +39,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Holder
 
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_item, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(itemLayout, parent, false);
         return new Holder(v);
     }
 

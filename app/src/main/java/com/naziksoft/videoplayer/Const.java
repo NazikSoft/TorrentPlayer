@@ -2,10 +2,6 @@ package com.naziksoft.videoplayer;
 
 public class Const {
 
-    // Global
-    public static final String TAG = "My LOG";
-    public static final String EXTRA_PLAY_PATH = "extra play path";
-
 
     // MainActivity
     public static final int REQUEST_GET_FILE_PATH = 1;
@@ -19,4 +15,9 @@ public class Const {
     public static final int RC_SIGN_IN = 9001;
     public static final String EXTRA_USER_EMAIL = "extra user email";
 
+    // Global
+    public static final String TAG = "My LOG";
+    public static final String EXTRA_PLAY_PATH = "extra play path";
+    public static final String SHARED_PREF_USER = "shared user";
+    public static final String SHARED_USER_EMAIL = "user email";
 }

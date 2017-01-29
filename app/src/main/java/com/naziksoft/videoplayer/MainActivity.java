@@ -13,7 +13,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
 import com.naziksoft.videoplayer.activity.AuthActivity;
 import com.naziksoft.videoplayer.activity.FileChooser;
@@ -46,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private Controller c;
     private Video video;
     private LayoutManagers currentManager = LayoutManagers.LINEAR;
+    private String user = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,8 +86,10 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.itemHistory:
                 break;
-            case R.id.itemSync:
-                startActivityForResult(new Intent(this, AuthActivity.class),Const.REQUEST_GET_USER_EMAIL);
+            case R.id.itemSignIn:
+                user = c.getUserFromSharedPref();
+                if (user.equals(""))
+                    startActivityForResult(new Intent(this, AuthActivity.class), Const.REQUEST_GET_USER_EMAIL);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -150,11 +152,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void setRecyclerAdapter(){
+    private void setRecyclerAdapter() {
         if (currentManager == LayoutManagers.GRID)
-            recyclerAdapter = new RecyclerAdapter(this,R.layout.layout_item_grid, listData);
+            recyclerAdapter = new RecyclerAdapter(this, R.layout.layout_item_grid, listData);
         else
-            recyclerAdapter = new RecyclerAdapter(this,R.layout.layout_item_line, listData);
+            recyclerAdapter = new RecyclerAdapter(this, R.layout.layout_item_line, listData);
 
         recyclerAdapter.setOnRecyclerClickListener(new OnRecyclerClickListener() {
             @Override
@@ -200,10 +202,13 @@ public class MainActivity extends AppCompatActivity {
 
             // start auth and get user email
             case Const.REQUEST_GET_USER_EMAIL:
-                if (resultCode == RESULT_OK){
+                if (resultCode == RESULT_OK) {
                     String email = data.getStringExtra(Const.EXTRA_USER_EMAIL);
-                    if (email != "")
-                        Toast.makeText(MainActivity.this, email, Toast.LENGTH_LONG).show();
+                    if (!email.equals("")) {
+                        Snackbar.make(toolbar, email, Snackbar.LENGTH_LONG).show();
+                        user = email;
+                        c.setUserFromSharedPref(user);
+                    }
                 }
                 break;
 

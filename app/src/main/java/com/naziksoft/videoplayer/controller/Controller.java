@@ -2,6 +2,7 @@ package com.naziksoft.videoplayer.controller;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Environment;
 
 import com.naziksoft.videoplayer.Const;
@@ -16,15 +17,18 @@ import java.util.List;
 
 public class Controller {
     private Context context;
+    private SharedPreferences sp;
 
     public Controller(Context context) {
         this.context = context;
+        sp = context.getSharedPreferences(Const.SHARED_PREF_USER, Context.MODE_PRIVATE);
     }
 
     public void runPlayer(Video video) {
         Intent intent = new Intent(context, VideoPlayer.class);
         intent.putExtra(Const.EXTRA_PLAY_PATH, video.getPath());
         context.startActivity(intent);
+
     }
 
     public boolean isVideoFile(String path) {
@@ -46,6 +50,14 @@ public class Controller {
     public List<File> getUserDirFiles(String filePath) {
         File userFile = new File(filePath).getParentFile();
         return Arrays.asList(userFile.listFiles());
+    }
+
+    public String getUserFromSharedPref(){
+        return sp.getString(Const.SHARED_PREF_USER,"");
+    }
+
+    public void setUserFromSharedPref(String userEmail){
+         sp.edit().putString(Const.SHARED_PREF_USER,userEmail).apply();
     }
 
 

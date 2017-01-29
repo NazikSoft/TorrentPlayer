@@ -9,7 +9,7 @@
     <string name="history">History</string>
     <string name="sort">Sort</string>
     <string name="view_stile">View stile</string>
-    <string name="cloud_sync">Cloud sync</string>
+    <string name="cloud_sign_in">Sign In</string>
     <string name="button_fullscreen">fullscreen</string>
 
     <!-- Strings related to login -->
@@ -31,6 +31,7 @@
     <string name="pass_err">Invalid password</string>
     <string name="mail_helper">Enter email</string>
     <string name="mail_err">Invalid email</string>
+    <string name="menuitem_history">History</string>
 
     <string-array name="spinner_list">
         <item>Downloads</item>

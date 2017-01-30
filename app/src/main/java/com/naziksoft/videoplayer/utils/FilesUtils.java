@@ -18,7 +18,6 @@ public class FilesUtils {
         return new File(path).exists();
     }
 
-
     public static String nameFromPath(String path, boolean withExtension) {
         if (path == null || path.equals("")) return "";
 
@@ -33,7 +32,6 @@ public class FilesUtils {
         }
     }
 
-
     public static void sortAZ(List<File> list) {
         Comparator<File> comparator = new Comparator<File>() {
             @Override
@@ -44,7 +42,16 @@ public class FilesUtils {
         Collections.sort(list, comparator);
     }
 
+    public static List<File> videosToFiles(List<Video> videos) {
+        List<File> res = new ArrayList<>();
+        for (Video video : videos) {
+            File temp = new File(video.getPath());
+            res.add(temp);
+        }
+        return res;
+    }
 
+    // for future
     public static void sortZA(List<File> list) {
         Comparator<File> comparator = new Comparator<File>() {
             @Override
@@ -55,7 +62,7 @@ public class FilesUtils {
         Collections.sort(list, comparator);
     }
 
-
+    // for future
     public static boolean isMountSD() {
         if (!Environment.getExternalStorageState().equals(
                 Environment.MEDIA_MOUNTED)) {
@@ -65,12 +72,4 @@ public class FilesUtils {
         return true;
     }
 
-    public static List<File> videosToFiles (List<Video> videos){
-        List<File> res = new ArrayList<>();
-        for (Video video : videos) {
-            File temp = new File(video.getPath());
-            res.add(temp);
-        }
-        return res;
-    }
 }

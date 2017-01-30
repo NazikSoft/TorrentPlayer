@@ -21,4 +21,8 @@
          <item name="android:background">@color/colorTextLight</item>
      </style>
 
+    <style name="Material.Drawable.CircularProgress">
+        <item name="cpd_strokeColors">@array/progress</item>
+    </style>
+
  </resources>

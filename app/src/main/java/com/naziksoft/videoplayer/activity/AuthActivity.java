@@ -1,6 +1,5 @@
 package com.naziksoft.videoplayer.activity;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -27,6 +26,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.naziksoft.videoplayer.consts.Const;
 import com.naziksoft.videoplayer.R;
+import com.rey.material.widget.ProgressView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,8 +45,8 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
     com.rey.material.widget.Button bRegister;
     @BindView(R.id.bSignInGoogle)
     SignInButton bSignInGoogle;
-
-    private ProgressDialog progressDialog;
+    @BindView(R.id.progressView)
+    ProgressView progressView;
 
     //  auth elements
     private FirebaseAuth firebaseAuth;
@@ -106,17 +106,17 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
         if (!checkValidateInputFills())
             return;
 
-        showProgressDialog();
+        showProgress();
 
         firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 Log.d(Const.TAG, "createUserWithEmail.onComplete: " + task.isSuccessful());
-                hideProgressDialog();
+                hideProgress();
                 if (!task.isSuccessful())
                     Toast.makeText(AuthActivity.this, R.string.user_with_email_exist, Toast.LENGTH_SHORT).show();
                 else {
-                    hideProgressDialog();
+                    hideProgress();
                     Intent intent = new Intent();
                     intent.putExtra(Const.EXTRA_USER_EMAIL, userEmail);
                     setResult(RESULT_OK, intent);
@@ -133,13 +133,13 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
         if (!checkValidateInputFills())
             return;
 
-        showProgressDialog();
+        showProgress();
 
         firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 Log.d(Const.TAG, "signInWithEmail.onComplete: " + task.isSuccessful());
-                hideProgressDialog();
+                hideProgress();
                 if (!task.isSuccessful()) {
                     Toast.makeText(AuthActivity.this, R.string.error_auth, Toast.LENGTH_SHORT).show();
                 } else {
@@ -179,7 +179,7 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
     // sign in with Google account
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         Log.d(Const.TAG, "firebaseAuthWithGoogle:" + acct.getId());
-        showProgressDialog();
+        showProgress();
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         firebaseAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -187,7 +187,7 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(Const.TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
 
-                        hideProgressDialog();
+                        hideProgress();
 
                         // If sign in fails, display a message to the user.
                         if (!task.isSuccessful()) {
@@ -220,14 +220,12 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void showProgressDialog() {
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle(R.string.progress_dialog_title);
-        progressDialog.setMessage(getResources().getText(R.string.progress_dialog_massage));
+    private void showProgress() {
+        progressView.start();
     }
 
-    private void hideProgressDialog() {
-        progressDialog.hide();
+    private void hideProgress() {
+        progressView.stop();
     }
 
     // method for check validate input password and email

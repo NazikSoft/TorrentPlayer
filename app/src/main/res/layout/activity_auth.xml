@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="top"
@@ -24,6 +25,34 @@
             android:layout_marginRight="15dp" />
 
     </android.support.v7.widget.Toolbar>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar_auth_activity"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="53dp"
+        android:text="@string/textview_authorization"
+        android:textColor="@color/colorTextPrimary"
+        android:textSize="18sp"
+        android:textStyle="normal|bold"
+        android:typeface="sans" />
+
+    <com.rey.material.widget.ProgressView
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        app:pv_autostart="false"
+        app:pv_circular="true"
+        app:pv_progressMode="indeterminate"
+        android:id="@+id/progressView"
+        android:layout_alignBottom="@+id/editTextEmail"
+        android:layout_toRightOf="@+id/textView3"
+        android:layout_toEndOf="@+id/textView3"
+        android:layout_marginLeft="40dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginBottom="45dp"
+        style="@style/Material.Drawable.CircularProgress" />
 
     <com.rey.material.widget.EditText
         android:id="@+id/editTextEmail"
@@ -72,17 +101,6 @@
 
     </com.rey.material.widget.EditText>
 
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/bSignInGoogle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/textView3"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/textView3"
-        android:layout_gravity="center"
-        android:layout_marginBottom="60dp"
-        android:visibility="visible" />
-
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
@@ -123,18 +141,18 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/textView3"
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/bSignInGoogle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar_auth_activity"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="53dp"
-        android:text="@string/textview_authorization"
-        android:textColor="@color/colorTextPrimary"
-        android:textSize="18sp"
-        android:textStyle="normal|bold"
-        android:typeface="sans" />
+        android:layout_alignEnd="@+id/textView3"
+        android:layout_alignParentBottom="false"
+        android:layout_alignRight="@+id/textView3"
+        android:layout_gravity="center"
+        android:visibility="visible"
+        android:layout_below="@+id/linearLayout2"
+        android:layout_marginTop="60dp" />
 
 
 </RelativeLayout>

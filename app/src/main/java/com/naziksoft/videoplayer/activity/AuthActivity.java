@@ -24,8 +24,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.naziksoft.videoplayer.consts.Const;
 import com.naziksoft.videoplayer.R;
+import com.naziksoft.videoplayer.consts.Const;
 import com.rey.material.widget.ProgressView;
 
 import butterknife.BindView;
@@ -53,6 +53,8 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
     private FirebaseAuth.AuthStateListener authStateListener;
     private GoogleApiClient mGoogleApiClient;
     private String userEmail = "";
+    // view for Snackbar
+    private View v = bSignIn;
 
 
     @Override
@@ -114,9 +116,8 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
                 Log.d(Const.TAG, "createUserWithEmail.onComplete: " + task.isSuccessful());
                 hideProgress();
                 if (!task.isSuccessful())
-                    Toast.makeText(AuthActivity.this, R.string.user_with_email_exist, Toast.LENGTH_SHORT).show();
+                    Snackbar.make(v, R.string.user_with_email_exist, Snackbar.LENGTH_LONG).show();
                 else {
-                    hideProgress();
                     Intent intent = new Intent();
                     intent.putExtra(Const.EXTRA_USER_EMAIL, userEmail);
                     setResult(RESULT_OK, intent);
@@ -141,7 +142,7 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
                 Log.d(Const.TAG, "signInWithEmail.onComplete: " + task.isSuccessful());
                 hideProgress();
                 if (!task.isSuccessful()) {
-                    Toast.makeText(AuthActivity.this, R.string.error_auth, Toast.LENGTH_SHORT).show();
+                    Snackbar.make(v, R.string.error_auth, Snackbar.LENGTH_SHORT).show();
                 } else {
                     Intent intent = new Intent();
                     intent.putExtra(Const.EXTRA_USER_EMAIL, userEmail);
@@ -161,18 +162,19 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-        if (requestCode == Const.RC_SIGN_IN) {
-            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            if (result.isSuccess()) {
-                // Google Sign In was successful, authenticate with Firebase
-                GoogleSignInAccount account = result.getSignInAccount();
-                firebaseAuthWithGoogle(account);
-            } else {
-                // Google Sign In failed
-                Log.e(Const.TAG, "Google Sign In failed.");
-            }
+        switch (requestCode) {
+            // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+            case Const.RC_SIGN_IN:
+                GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+                if (result.isSuccess()) {
+                    // Google Sign In was successful, authenticate with Firebase
+                    GoogleSignInAccount account = result.getSignInAccount();
+                    firebaseAuthWithGoogle(account);
+                } else {
+                    // Google Sign In failed
+                    Log.e(Const.TAG, "Google Sign In failed.");
+                }
+                break;
         }
     }
 
@@ -192,8 +194,7 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
                         // If sign in fails, display a message to the user.
                         if (!task.isSuccessful()) {
                             Log.w(Const.TAG, "signInWithCredential", task.getException());
-                            Toast.makeText(AuthActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
+                            Snackbar.make(v, R.string.sign_in_google_err, Snackbar.LENGTH_SHORT).show();
                         } else {
                             Intent intent = new Intent();
                             intent.putExtra(Const.EXTRA_USER_EMAIL, userEmail);

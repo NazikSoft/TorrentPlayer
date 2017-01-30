@@ -34,6 +34,7 @@
     <string name="mail_err">Invalid email</string>
     <string name="menuitem_history">History</string>
     <string name="toolbar_history">Recent Hystory</string>
+    <string name="sign_in_google_err">Authentication failed.</string>
 
     <string-array name="spinner_list">
         <item>Downloads</item>

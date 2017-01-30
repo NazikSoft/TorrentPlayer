@@ -13,7 +13,7 @@
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        android:title="@string/toolbar_sign_in" />
+        app:title="@string/toolbar_sign_in" />
 
     <com.rey.material.widget.EditText
         android:id="@+id/editTextEmail"

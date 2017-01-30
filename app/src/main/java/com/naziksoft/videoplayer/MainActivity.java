@@ -13,10 +13,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
 import com.naziksoft.videoplayer.activity.AuthActivity;
 import com.naziksoft.videoplayer.activity.FileChooser;
+import com.naziksoft.videoplayer.consts.Const;
 import com.naziksoft.videoplayer.controller.Controller;
 import com.naziksoft.videoplayer.entity.OnRecyclerClickListener;
 import com.naziksoft.videoplayer.entity.RecyclerAdapter;

@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Environment;
 
-import com.naziksoft.videoplayer.Const;
+import com.naziksoft.videoplayer.consts.Const;
 import com.naziksoft.videoplayer.activity.VideoPlayer;
 import com.naziksoft.videoplayer.entity.Video;
 

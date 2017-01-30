@@ -1,4 +1,4 @@
-package com.naziksoft.videoplayer;
+package com.naziksoft.videoplayer.consts;
 
 public class Const {
 
@@ -14,6 +14,12 @@ public class Const {
     // AuthActivity
     public static final int RC_SIGN_IN = 9001;
     public static final String EXTRA_USER_EMAIL = "extra user email";
+
+    // DB
+    public static final String DATABASE_NAME = "VideoDB.db";
+    public static final String TABLE_NAME = "VideoTable";
+    public static int DATABASE_VERSION = 1;
+
 
     // Global
     public static final String TAG = "My LOG";

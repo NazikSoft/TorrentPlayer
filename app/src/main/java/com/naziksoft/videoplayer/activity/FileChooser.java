@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.naziksoft.videoplayer.Const;
+import com.naziksoft.videoplayer.consts.Const;
 import com.naziksoft.videoplayer.R;
 import com.naziksoft.videoplayer.controller.Controller;
 

@@ -21,7 +21,6 @@
         app:rd_enable="true"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:padding="10dp"
-        android:backgroundTint="@color/colorAccent" />
+        android:padding="10dp"/>
 
 </RelativeLayout>

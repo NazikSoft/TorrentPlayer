@@ -3,7 +3,7 @@ package com.naziksoft.videoplayer.utils;
 import android.os.Environment;
 import android.util.Log;
 
-import com.naziksoft.videoplayer.Const;
+import com.naziksoft.videoplayer.consts.Const;
 
 import java.io.File;
 import java.util.Collections;

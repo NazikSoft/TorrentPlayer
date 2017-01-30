@@ -25,7 +25,6 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:paddingTop="10dp"
-            android:spinnerMode="dialog"
             app:rd_style="@style/Material.Drawable.Ripple.Wave"
             app:spn_arrowColor="@color/colorTextPrimary"
             app:spn_dividerColor="@color/colorTextPrimary" />

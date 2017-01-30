@@ -4,8 +4,10 @@ import android.os.Environment;
 import android.util.Log;
 
 import com.naziksoft.videoplayer.consts.Const;
+import com.naziksoft.videoplayer.entity.Video;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -61,5 +63,14 @@ public class FilesUtils {
             return false;
         }
         return true;
+    }
+
+    public static List<File> videosToFiles (List<Video> videos){
+        List<File> res = new ArrayList<>();
+        for (Video video : videos) {
+            File temp = new File(video.getPath());
+            res.add(temp);
+        }
+        return res;
     }
 }

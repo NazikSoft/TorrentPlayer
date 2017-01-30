@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 
 import com.naziksoft.videoplayer.activity.AuthActivity;
 import com.naziksoft.videoplayer.activity.FileChooser;
+import com.naziksoft.videoplayer.activity.HistoryActivity;
 import com.naziksoft.videoplayer.consts.Const;
 import com.naziksoft.videoplayer.controller.Controller;
 import com.naziksoft.videoplayer.entity.OnRecyclerClickListener;
@@ -91,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.itemHistory:
+                startActivity(new Intent(this, HistoryActivity.class));
                 break;
 
             case R.id.itemSetting:
@@ -128,9 +130,10 @@ public class MainActivity extends AppCompatActivity {
     private void onRecyclerClickLogic(int position) {
         String path = listData.get(position).getPath();
         // check is file real
-        if (!FilesUtils.isExists(path))
+        if (!FilesUtils.isExists(path)) {
             Snackbar.make(recyclerView, R.string.controller_file_not_exists, Snackbar.LENGTH_SHORT).show();
-
+            return;
+        }
         // check is file video
         if (c.isVideoFile(path)) {
             video = new Video(path);

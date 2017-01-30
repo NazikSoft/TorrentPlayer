@@ -24,18 +24,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activity.FileChooser"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.VideoPlayer"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_video_player"
             android:theme="@style/FullscreenTheme" />
-
-        <activity android:name=".activity.AuthActivity"></activity>
+        <activity android:name=".activity.AuthActivity" />
+        <activity android:name=".activity.HistoryActivity"></activity>
     </application>
 
 </manifest>

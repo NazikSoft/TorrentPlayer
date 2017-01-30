@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 
@@ -149,23 +150,25 @@ public class MainActivity extends AppCompatActivity {
                 R.array.spinner_list, R.layout.support_simple_spinner_dropdown_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+        spinner.setOnItemClickListener(new Spinner.OnItemClickListener() {
             @Override
-            public void onItemSelected(Spinner parent, View view, int position, long id) {
+            public boolean onItemClick(Spinner parent, View view, int position, long id) {
                 String[] choose = getResources().getStringArray(R.array.spinner_list);
                 switch (choose[position]) {
                     case "Downloads":
                         listData = c.getDownloadsDirFiles();
                         recyclerAdapter.updateList(listData);
-                        break;
+                        return true;
                     case "Video":
                         listData = c.getVideoDirFiles();
                         recyclerAdapter.updateList(listData);
-                        break;
+                        return true;
                     case "Select video...":
                         startActivityForResult(new Intent(MainActivity.this, FileChooser.class),
                                 Const.REQUEST_GET_FILE_PATH);
+                        return true;
                 }
+                return false;
             }
         });
     }

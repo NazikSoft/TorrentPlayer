@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -232,13 +231,20 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
     // method for check validate input password and email
     private boolean checkValidateInputFills() {
         boolean result = true;
-        String email = editTextEmail.getText().toString();
 
-        if (TextUtils.isEmpty(email) || !email.contains("@")) {
+        // check valid email
+        String email = editTextEmail.getText().toString();
+        if (TextUtils.isEmpty(email)) {
+            editTextEmail.setError(getResources().getString(R.string.mail_empty));
+            result = false;
+        } else if (android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches())
+            editTextEmail.setError(null);
+        else {
             editTextEmail.setError(getResources().getString(R.string.mail_err));
             result = false;
-        } else editTextEmail.setError(null);
+        }
 
+        // check valid password
         String password = editTextPassword.getText().toString();
         if (TextUtils.isEmpty(password)) {
             editTextPassword.setError(getResources().getString(R.string.pass_err_empty));

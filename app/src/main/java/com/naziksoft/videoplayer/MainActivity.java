@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import com.naziksoft.videoplayer.activity.AuthActivity;
 import com.naziksoft.videoplayer.activity.FileChooser;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private Video video;
     private LayoutManagers currentManager = LayoutManagers.LINEAR;
     private String user = "";
+    private MenuItem signIn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         c = new Controller(this);
+        user = c.getUserFromSharedPref();
         if (listData == null)
             listData = c.getDownloadsDirFiles();
 
@@ -69,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.options_menu, menu);
+        signIn = menu.findItem(R.id.itemSignIn);
         return true;
     }
 
@@ -79,17 +83,28 @@ public class MainActivity extends AppCompatActivity {
                 FilesUtils.sortAZ(listData);
                 recyclerAdapter.updateList(listData);
                 break;
+
             case R.id.itemViewStyle:
                 changeViewStyleIcon(item);
                 setLayoutManager();
                 setRecyclerAdapter();
                 break;
+
             case R.id.itemHistory:
                 break;
-            case R.id.itemSignIn:
-                user = c.getUserFromSharedPref();
+
+            case R.id.itemSetting:
                 if (user.equals(""))
-                    startActivityForResult(new Intent(this, AuthActivity.class), Const.REQUEST_GET_USER_EMAIL);
+                    signIn.setChecked(false);
+                else signIn.setChecked(true);
+                break;
+
+            case R.id.itemSignIn:
+                if (item.isChecked()) {
+                    c.clearUsersFromSharedPref();
+                    user = "";
+                }
+                startActivityForResult(new Intent(this, AuthActivity.class), Const.REQUEST_GET_USER_EMAIL);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -207,7 +222,7 @@ public class MainActivity extends AppCompatActivity {
                     if (!email.equals("")) {
                         Snackbar.make(toolbar, email, Snackbar.LENGTH_LONG).show();
                         user = email;
-                        c.setUserFromSharedPref(user);
+                        c.saveUserToSharedPref(user);
                     }
                 }
                 break;

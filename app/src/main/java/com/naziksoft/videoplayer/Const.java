@@ -19,5 +19,4 @@ public class Const {
     public static final String TAG = "My LOG";
     public static final String EXTRA_PLAY_PATH = "extra play path";
     public static final String SHARED_PREF_USER = "shared user";
-    public static final String SHARED_USER_EMAIL = "user email";
 }

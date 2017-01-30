@@ -13,13 +13,13 @@
     <string name="button_fullscreen">fullscreen</string>
 
     <!-- Strings related to login -->
-    <string name="error_auth">Auth failed</string>
+    <string name="error_auth">Invalid pass or email.</string>
     <string name="progress_dialog_title">Authorization</string>
     <string name="progress_dialog_massage">Connecting…</string>
     <string name="sign_in">Sign In</string>
     <string name="menu_logout">Log Out</string>
     <string name="play_services_error">Google Play Services error.</string>
-    <string name="user_with_email_exist">Auth fail</string>
+    <string name="user_with_email_exist">Auth fail. Please verify your input email.</string>
     <string name="button_sign_in">Sign In</string>
     <string name="button_register">Register</string>
     <string name="edittext_email">Your email</string>
@@ -27,8 +27,9 @@
     <string name="toolbar_sign_in">Sign In</string>
     <string name="textview_authorization">Authorization</string>
     <string name="textview_or">or</string>
-    <string name="pass_helper">Enter min 4 chars</string>
-    <string name="pass_err">Invalid password</string>
+    <string name="pass_helper">Enter min 6 chars</string>
+    <string name="pass_err_empty">Invalid password</string>
+    <string name="pass_err_short">Pass is short</string>
     <string name="mail_helper">Enter email</string>
     <string name="mail_err">Invalid email</string>
     <string name="menuitem_history">History</string>

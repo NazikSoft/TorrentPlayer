@@ -56,8 +56,12 @@ public class Controller {
         return sp.getString(Const.SHARED_PREF_USER,"");
     }
 
-    public void setUserFromSharedPref(String userEmail){
+    public void saveUserToSharedPref(String userEmail){
          sp.edit().putString(Const.SHARED_PREF_USER,userEmail).apply();
+    }
+
+    public void clearUsersFromSharedPref(){
+         sp.edit().clear().apply();
     }
 
 

@@ -237,16 +237,16 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
         String email = editTextEmail.getText().toString();
 
         if (TextUtils.isEmpty(email) || !email.contains("@")) {
-            editTextEmail.setError("Invalid email");
+            editTextEmail.setError(getResources().getString(R.string.mail_err));
             result = false;
         } else editTextEmail.setError(null);
 
         String password = editTextPassword.getText().toString();
         if (TextUtils.isEmpty(password)) {
-            editTextPassword.setError("Invalid password");
+            editTextPassword.setError(getResources().getString(R.string.pass_err_empty));
             result = false;
-        } else if (password.length() < 4) {
-            editTextPassword.setError("Min length is 4 chars");
+        } else if (password.length() < 6) {
+            editTextPassword.setError(getResources().getString(R.string.pass_err_short));
             result = false;
         } else editTextPassword.setError(null);
 

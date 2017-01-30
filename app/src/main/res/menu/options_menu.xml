@@ -30,7 +30,6 @@
                 android:icon="@drawable/ic_history_black_24dp"
                 android:orderInCategory="2"
                 android:title="@string/history"
-                android:actionLayout="@layout/menuitem_history"
                 app:showAsAction="never" />
 
             <item
